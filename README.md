@@ -39,24 +39,48 @@ This tool uses the AppInfo RPC interface to launch `ComputerDefaults.exe` elevat
 ## Build Instructions
 
 ### Requirements
-- Visual Studio 2022 (recommended) or MinGW-w64
-- Target: **x64 Release**
+- Visual Studio 2022 (or newer) with C++ Desktop Development workload
+- OR MinGW-w64
 
-### Steps (Visual Studio)
+### 1. Using cl.exe (Visual Studio Command Line)
+
+1. Open **x64 Native Tools Command Prompt for VS 2022** (important: use x64 version)
+2. Navigate to the folder containing `UAC.c`
+3. Compile with:
+
+```cmd
+cl.exe UAC.c /Fe:UAC.exe /O2 /MT /link rpcrt4.lib ntdll.lib advapi32.lib shlwapi.lib
+```
+> I just use the simple `cl.exe UAC.c` and done
+**Recommended flags explained:**
+- `/Fe:UAC.exe` → Output executable name
+- `/O2` → Maximum optimization
+- `/MT` → Static runtime (smaller & more portable binary)
+
+For a cleaner debug build (if you want symbols):
+
+```cmd
+cl.exe UAC.c /Fe:UAC.exe /Zi /link rpcrt4.lib ntdll.lib advapi32.lib shlwapi.lib
+```
+
+### 2. Using Visual Studio IDE
 1. Create a new **Win32 Console Application** (Empty Project)
-2. Add the file `UAC.c` to the project
-3. Set project to **x64**
-4. In Project Properties:
-   - **C/C++ → General → Additional Include Directories**: Add `%ProgramFiles(x86)%\Windows Kits\10\Include\10.0.22621.0\um`
-   - **Linker → Input → Additional Dependencies**: `rpcrt4.lib;ntdll.lib;advapi32.lib;shlwapi.lib`
-5. Build → Build Solution
+2. Add `UAC.c` to the project
+3. Set to **x64 Release**
+4. In Project Properties → Linker → Input → Additional Dependencies:
+   ```
+   rpcrt4.lib;ntdll.lib;advapi32.lib;shlwapi.lib
+   ```
+5. Build Solution
 
-### Alternative (MinGW)
+### 3. Using MinGW-w64
+
 ```bash
-x86_64-w64-mingw32-gcc UAC.c -o UAC.exe -l rpcrt4 -l ntdll -l advapi32 -l shlwapi -static
+x86_64-w64-mingw32-gcc UAC.c -o UAC.exe -l rpcrt4 -l ntdll -l advapi32 -l shlwapi -static -O2
 ```
 
 ---
+
 
 ## Usage
 
