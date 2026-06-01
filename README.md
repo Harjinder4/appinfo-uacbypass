@@ -3,7 +3,7 @@
 A refined and obfuscated version of the **AppInfo RPC + Debug Object** UAC bypass technique.
 
 **Original Author**: [redcivet](https://github.com/redcivet/appinfo-standalone)  
-**Modified & Obfuscated by**: Harjinder04
+**Modified & Obfuscated by**: Harjinder4
 
 ---
 
